@@ -6,11 +6,11 @@ using System.Text;
 
 namespace Tetris
 {
-    enum Direction { Right, Left, Up, Down }
-    internal class Brick
+    enum Direction { Right, Left, Down }
+    class Brick
     {
-        public bool[,] Figure { get; internal set; }
-        public Point Position { get; internal set; }
+        public bool[,] Figure { get; set; }
+        public Point Position { get; set; }
 
         //need to test it for first!!
         public void Rotate(Direction rotation)
@@ -42,39 +42,20 @@ namespace Tetris
 
         public void MoveTo(Direction moveDirection)
         {
-            //switch (moveDirection)
-            //{
-            //    case Direction.Right: 
-            //        break;
-            //    case Direction.Left:
-            //        break;
-            //    case Direction.Up:
-            //        break;
-            //    case Direction.Down:
-            //        break;
-            //    default:
-            //        break;
-            //}
-
-            //need to choose what is better!!
             Position = new Point(Position.X + moveDirection == Direction.Left ? -1 : moveDirection == Direction.Right ? 1 : 0,
-                Position.Y + moveDirection == Direction.Up ? 1 : moveDirection == Direction.Down ? -1 : 0);
-        }
-        public void MoveTo(Point destenation)
-        {
-            Position = destenation;
+                Position.Y + moveDirection == Direction.Down ? 1 : 0);
         }
 
     }
 
     internal static class Bricks
     {
-        static Brick[] GetAllBricks { get; private set; }
+        public static Brick[] GetAllBricks { get; private set; }
         static Brick L
         {
             get
             {
-                bool[,] figure = new bool[4, 4];
+                bool[,] figure = new bool[5, 5];
                 figure[1, 1] = true;
                 figure[1, 2] = true;
                 figure[1, 3] = true;
@@ -118,10 +99,47 @@ namespace Tetris
                 return new Brick() { Figure = figure };
             }
         }
+        static Brick _S
+        {
+            get
+            {
+                bool[,] figure = new bool[4, 4];
+                figure[1, 1] = true;
+                figure[2, 2] = true;
+                figure[1, 2] = true;
+                figure[2, 3] = true;
+                return new Brick() { Figure = figure };
+            }
+        }
+
+        static Brick T
+        {
+            get
+            {
+                bool[,] figure = new bool[3, 3];
+                figure[1, 0] = true;
+                figure[0, 1] = true;
+                figure[1, 1] = true;
+                figure[2, 1] = true;
+                return new Brick() { Figure = figure };
+            }
+        }
+        static Brick I
+        {
+            get
+            {
+                bool[,] figure = new bool[5, 5];
+                figure[2, 1] = true;
+                figure[2, 2] = true;
+                figure[2, 3] = true;
+                figure[2, 4] = true;
+                return new Brick() { Figure = figure };
+            }
+        }
 
         static Bricks()
         {
-            GetAllBricks = new Brick[] { L, J, O, S };
+            GetAllBricks = new Brick[] { L, J, O, S, _S, T, I };
         }
     }
 }

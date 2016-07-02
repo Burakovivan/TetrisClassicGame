@@ -8,21 +8,23 @@ namespace Tetris
 {
     public static class View
     {
-        public static OpenGL context;
+        public static OpenGL Canvas { get; set; }
 
-
-        public void Draw()
-        {
-            
-        }
-
-        static class Field
+        static class Field 
         {
             public static bool[,] Commited { get; private set; }
             public static bool[,] InTransit { get; private set; }
-            Brick falling;
-            public int Speed { get; private set; }
-            public int Scoore { get; private set; }
+
+            static Brick falling;
+            static public int Speed { get; private set; }
+            static public int Scoore { get; private set; }
+
+
+            //проверка падания
+            //отлов управления (движение, поворот)
+            //проверка линий
+            //подсчет очков
+            
         }
 
     }
