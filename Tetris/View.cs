@@ -10,35 +10,31 @@ namespace Tetris
     {
         public static int x = 0;
         public static int y = 0;
-        private enum Color { Gray, LigtGray, Black }
+        private enum Color { Gray, LigtGray, Black, _8E9F97 }
         public static OpenGL Canvas { get; set; }
 
         public static void Render()
         {
-           
+
             Canvas.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
             Canvas.LoadIdentity();
 
-            //below u can define position of screen manualy
-            //string[] arr = Console.ReadLine().Split(' ');
-            //Canvas.Translate(double.Parse(arr[0]), double.Parse(arr[1]), double.Parse(arr[2]));
             Canvas.Translate(0.0f, -1.0f, -25.0f);
+            for (int i = 0; i < Field.Commited.GetLength(0); i++)
+            {
+                for (int j = 0; j < Field.Commited.GetLength(1); j++)
+                {
+                    drawBrick(i, j, Field.Commited[i, j]);
+                }
+            }
 
-            drawRect(x, y, 1, 1, Color.LigtGray);
 
-            //Canvas.Begin(OpenGL.GL_QUADS);
-
-            //Canvas.Color(1.0, 0, 0);
-            //Canvas.Vertex(-1, -1, 0);
-            //Canvas.Color(1.0, 1.0, 0);
-            //Canvas.Vertex(-1, 1, 0);
-            //Canvas.Color(0.0, 1.0, 1.0);
-            //Canvas.Vertex(1, 1, 0);
-            //Canvas.Color(0.0, 0.0, 1.0);
-            //Canvas.Vertex(1, -1, 0);
-
-            //Canvas.End();
-
+            //drawBrick(x, y);
+            //drawBrick(x + 1, y);
+            //drawBrick(x + 2, y);
+            //drawBrick(x, y - 1);
+            //drawBrick(x + 1, y - 2);
+            //drawBrick(x + 2, y - 3);
 
             Canvas.Flush();
         }
@@ -51,9 +47,9 @@ namespace Tetris
         /// <param name="widht">width of rect</param>
         /// <param name="height">height of rect</param>
         /// <param name="color">color of rect</param>
-        private static void drawRect(double x, double y, double widht, double height, Color color)
+        private static void fillRect(double x, double y, double widht, double height, Color color)
         {
-            
+
             Canvas.Begin(OpenGL.GL_QUADS);
 
             switch (color)
@@ -67,17 +63,56 @@ namespace Tetris
                 case Color.Black:
                     Canvas.Color((byte)0, (byte)0, (byte)0);
                     break;
+                case Color._8E9F97:
+                    Canvas.Color((byte)142, (byte)159, (byte)151);
+                    break;
                 default:
                     break;
             }
 
             Canvas.Vertex(x, y, 0);         //top-left
-            Canvas.Vertex(x+widht, y, 0);   //top-right
-            Canvas.Vertex(x+widht, y+height, 0);         //bottom-right
-            Canvas.Vertex(x, y+height, 0);        //bottom-left
+            Canvas.Vertex(x + widht, y, 0);   //top-right
+            Canvas.Vertex(x + widht, y + height, 0);         //bottom-right
+            Canvas.Vertex(x, y + height, 0);        //bottom-left
 
             Canvas.End();
-            
+        }
+
+        private static void drawRect(double x, double y, double width, double height, Color color)
+        {
+            switch (color)
+            {
+                case Color.Gray:
+                    Canvas.Color((byte)128, (byte)128, (byte)128);
+                    break;
+                case Color.LigtGray:
+                    Canvas.Color((byte)211, (byte)211, (byte)211);
+                    break;
+                case Color.Black:
+                    Canvas.Color((byte)0, (byte)0, (byte)0);
+                    break;
+                case Color._8E9F97:
+                    Canvas.Color((byte)142, (byte)159, (byte)151);
+                    break;
+                default:
+                    break;
+            }
+            Canvas.Begin(SharpGL.Enumerations.BeginMode.LineLoop);
+            Canvas.Vertex(x, y);
+            Canvas.Vertex(x + width, y);
+            Canvas.Vertex(x + width, y + width);
+            Canvas.Vertex(x, y + width);
+            Canvas.End();
+        }
+
+        private static void drawBrick(double x, double y, bool Commited)
+        {
+            x *= 1.5;
+            y *= 1.5;
+            x -= 14.5;
+            //y += 19.3;
+            fillRect(x + 0.2, y + 0.2, 0.6, 0.6, Commited ? Color.Gray : Color._8E9F97);
+            drawRect(x, y, 1, 1, Commited ? Color.Gray : Color._8E9F97);
         }
     }
 
