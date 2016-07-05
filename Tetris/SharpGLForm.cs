@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using SharpGL;
+using System.Threading;
 
 namespace Tetris
 {
@@ -81,14 +82,26 @@ namespace Tetris
 
         private void SharpGLForm_KeyDown(object sender, KeyEventArgs e)
         {
-            switch (e.KeyCode)
-            {
-                case Keys.A: View.x--; break;
-                case Keys.D: View.x++; break;
-                case Keys.S: View.y--; break;
-                case Keys.W: View.y++; break;
-            }
-            Console.Write("x:{0} y:{1}\n", View.x, View.y);
+            Player.CatchKey(e);
+            //switch (e.KeyCode)
+            //{
+            //    case Keys.A: View.x--; break;
+            //    case Keys.D: View.x++; break;
+            //    case Keys.S: View.y--; break;
+            //    case Keys.W: View.y++; break;
+            //}
+            //Console.Write("x:{0} y:{1}\n", View.x, View.y);
+        }
+
+        private void SharpGLForm_Load(object sender, EventArgs e)
+        {
+            Thread myt = new Thread(Player.Start);
+            myt.Start();
+        }
+
+        private void SharpGLForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Player.Terminate();
         }
 
     }

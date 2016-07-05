@@ -6,11 +6,11 @@ using System.Text;
 
 namespace Tetris
 {
-    enum Direction { Right, Left, Down }
+    enum Direction { Right, Left, Down, Up }
     class Brick
     {
         public bool[,] Figure { get; set; }
-        public Point Position { get; set; }
+        public Point Position;
 
         //need to test it for first!!
         public void Rotate(Direction rotation)
@@ -42,15 +42,30 @@ namespace Tetris
 
         public void MoveTo(Direction moveDirection)
         {
-            Position = new Point(Position.X + moveDirection == Direction.Left ? -1 : moveDirection == Direction.Right ? 1 : 0,
-                Position.Y + moveDirection == Direction.Down ? 1 : 0);
+            switch (moveDirection)
+            {
+                case Direction.Right:
+                    Position.X++;
+                    break;
+                case Direction.Left:
+                    Position.X--;
+                    break;
+                case Direction.Down:
+                    Position.Y++;
+                    break;
+                case Direction.Up:
+                    
+                    break;
+                default:
+                    break;
+            }
         }
 
     }
 
     internal static class Bricks
     {
-        public static Brick[] GetAllBricks { get; private set; }
+        public static Brick[] AllBricks { get; private set; }
         static Brick L
         {
             get
@@ -139,7 +154,7 @@ namespace Tetris
 
         static Bricks()
         {
-            GetAllBricks = new Brick[] { L, J, O, S, _S, T, I };
+            AllBricks = new Brick[] { L, J, O, S, _S, T, I };
         }
     }
 }

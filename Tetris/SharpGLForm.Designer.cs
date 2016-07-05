@@ -58,6 +58,8 @@
             this.KeyPreview = true;
             this.Name = "SharpGLForm";
             this.Text = "SharpGL Form";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SharpGLForm_FormClosed);
+            this.Load += new System.EventHandler(this.SharpGLForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SharpGLForm_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.openGLControl)).EndInit();
             this.ResumeLayout(false);

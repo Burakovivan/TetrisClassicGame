@@ -12,10 +12,24 @@ namespace Tetris
     {
         private const int SCORE_LINE = 100;
         private const int SCORE_BRICK = 4;
+        private const int WIDTH = 15;
+        private const int HEIGHT = 20;
         /// <summary>
         /// Bricks that was fallen down
         /// </summary>
         public static bool[,] Commited { get; set; }
+
+        static Field()
+        {
+
+        }
+
+        public static void Init()
+        {
+            Commited = new bool[WIDTH, HEIGHT];
+            getNextBrick();
+        }
+
 
         static public Brick fallingBrick;
         static public int Speed { get; private set; }
@@ -50,7 +64,7 @@ namespace Tetris
             else
             {
                 fallingBrick.MoveTo(Direction.Down);
-                FallingBrick();
+                //FallingBrick();
             }
         }
 
@@ -77,8 +91,18 @@ namespace Tetris
                     }
                 default: return false;
             }
+
+
         }
 
+
+        private static void getNextBrick()
+        {
+            Random r = new Random();
+            Field.fallingBrick = Bricks.AllBricks[r.Next(0, Bricks.AllBricks.Length - 1)];
+            Field.fallingBrick.Position =
+                new System.Drawing.Point(WIDTH / 2 - Field.fallingBrick.Figure.GetLength(0) / 2, 0);
+        }
         private static bool CheckCommited(int _x, int _y)
         {
             Point checkPoint = GetCheckPoint();

@@ -28,6 +28,14 @@ namespace Tetris
                 }
             }
 
+            for (int i = 0; i < Field.fallingBrick.Figure.GetLength(0); i++)
+            {
+                for (int j = 0; j < Field.fallingBrick.Figure.GetLength(1); j++)
+                {
+                    drawBrick(i + Field.fallingBrick.Position.X, j + Field.fallingBrick.Position.Y, Field.fallingBrick.Figure[i, j]);
+                }
+            }
+
 
             //drawBrick(x, y);
             //drawBrick(x + 1, y);
@@ -110,9 +118,9 @@ namespace Tetris
             x *= 1.5;
             y *= 1.5;
             x -= 14.5;
-            //y += 19.3;
-            fillRect(x + 0.2, y + 0.2, 0.6, 0.6, Commited ? Color.Gray : Color._8E9F97);
-            drawRect(x, y, 1, 1, Commited ? Color.Gray : Color._8E9F97);
+            y -= 15;
+            fillRect(x + 0.2, y + 0.2, 0.6, 0.6, Commited ? Color.Black : Color._8E9F97);
+            drawRect(x, y, 1, 1, Commited ? Color.Black : Color._8E9F97);
         }
     }
 
