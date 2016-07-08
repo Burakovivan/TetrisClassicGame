@@ -74,7 +74,7 @@ namespace Tetris
             gl.Perspective(30.0f, (double)Width / (double)Height, 0.01, 100.0);
 
             //  Use the 'look at' helper function to position and aim the camera.
-            gl.LookAt(0, 0,50, 0, 0, 0, 0, 1, 0);
+            gl.LookAt(-2, 0,-100, -2, 0, 0, 0, -1, 0);
 
             //  Set the modelview matrix.
             gl.MatrixMode(OpenGL.GL_MODELVIEW);

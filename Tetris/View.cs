@@ -32,17 +32,11 @@ namespace Tetris
             {
                 for (int j = 0; j < Field.fallingBrick.Figure.GetLength(1); j++)
                 {
-                    drawBrick(i + Field.fallingBrick.Position.X, j + Field.fallingBrick.Position.Y, Field.fallingBrick.Figure[i, j]);
+                    if (Field.fallingBrick.Figure[i, j])
+                    drawBrick(i + Field.fallingBrick.Position.X, j + Field.fallingBrick.Position.Y, true);
                 }
             }
 
-
-            //drawBrick(x, y);
-            //drawBrick(x + 1, y);
-            //drawBrick(x + 2, y);
-            //drawBrick(x, y - 1);
-            //drawBrick(x + 1, y - 2);
-            //drawBrick(x + 2, y - 3);
 
             Canvas.Flush();
         }
@@ -78,10 +72,10 @@ namespace Tetris
                     break;
             }
 
-            Canvas.Vertex(x, y, 0);         //top-left
-            Canvas.Vertex(x + widht, y, 0);   //top-right
-            Canvas.Vertex(x + widht, y + height, 0);         //bottom-right
-            Canvas.Vertex(x, y + height, 0);        //bottom-left
+            Canvas.Vertex(x, y, 0);                     //top-left
+            Canvas.Vertex(x + widht, y, 0);             //top-right
+            Canvas.Vertex(x + widht, y + height, 0);    //bottom-right
+            Canvas.Vertex(x, y + height, 0);            //bottom-left
 
             Canvas.End();
         }

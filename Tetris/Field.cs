@@ -89,6 +89,10 @@ namespace Tetris
                     {
                         return fallingBrick.Position.X + 1 < Commited.Length && CheckCommited(1, 0);
                     }
+                case (Direction.Up):
+                    {
+                        return true;
+                    }
                 default: return false;
             }
 
@@ -163,6 +167,11 @@ namespace Tetris
                 case (Keys.Right):
                     {
                         SetDirection(Direction.Right);
+                        break;
+                    }
+                case (Keys.Up):
+                    {
+                        SetDirection(Direction.Up);
                         break;
                     }
             }

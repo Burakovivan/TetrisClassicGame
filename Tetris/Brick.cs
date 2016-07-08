@@ -54,7 +54,7 @@ namespace Tetris
                     Position.Y++;
                     break;
                 case Direction.Up:
-                    
+                    Rotate(Direction.Right);
                     break;
                 default:
                     break;
