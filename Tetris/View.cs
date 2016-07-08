@@ -24,7 +24,7 @@ namespace Tetris
             {
                 for (int j = 0; j < Field.Commited.GetLength(1); j++)
                 {
-                    drawBrick(i, j, Field.Commited[i, j]);
+                    drawBrick(j, i, Field.Commited[i, j]);
                 }
             }
 
