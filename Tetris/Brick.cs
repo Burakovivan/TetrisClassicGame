@@ -15,16 +15,22 @@ namespace Tetris
         //need to test it for first!!
         public void Rotate(Direction rotation)
         {
-            int n = Figure.Length;
+            int n = Figure.GetLength(0);
 
             switch (rotation)
             {
                 case Direction.Right:
-                    for (int i = 0; i < n; ++i)
+                    // transpose
+                    transpose(Figure);
+
+                    // swap columns
+                    for (int j = 0; j < Figure.GetLength(0) / 2; j++)
                     {
-                        for (int j = 0; j < n; ++j)
+                        for (int i = 0; i < Figure.GetLength(0); i++)
                         {
-                            Figure[i, j] = Figure[n - j - 1, i];
+                            bool x = Figure[i,j];
+                            Figure[i, j] = Figure[Figure.GetLength(0) - 1 - i, j];
+                            Figure[Figure.GetLength(0) - 1 - i, j] = x;
                         }
                     }
                     break;
@@ -37,6 +43,19 @@ namespace Tetris
                         }
                     }
                     break;
+            }
+        }
+        private static void transpose(bool[,] m)
+        {
+
+            for (int i = 0; i < m.GetLength(0); i++)
+            {
+                for (int j = i; j < m.GetLength(0); j++)
+                {
+                    bool x = m[i,j];
+                    m[i,j] = m[j,i];
+                    m[j,i] = x;
+                }
             }
         }
 
@@ -52,9 +71,6 @@ namespace Tetris
                     break;
                 case Direction.Down:
                     Position.Y++;
-                    break;
-                case Direction.Up:
-                    Rotate(Direction.Right);
                     break;
                 default:
                     break;

@@ -59,6 +59,7 @@ namespace Tetris
                 Thread threadCheckLine = new Thread(CheckLine);
                 threadCheckLine.Start();
                 SetScore(SCORE_BRICK);
+                getNextBrick();
             }
             else
             {
@@ -227,11 +228,6 @@ namespace Tetris
                 case (Keys.Right):
                     {
                         SetDirection(Direction.Right);
-                        break;
-                    }
-                case (Keys.Up):
-                    {
-                        SetDirection(Direction.Up);
                         break;
                     }
             }
