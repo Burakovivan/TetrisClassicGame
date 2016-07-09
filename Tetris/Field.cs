@@ -33,19 +33,7 @@ namespace Tetris
         static public Brick fallingBrick;
         static public int Speed { get; private set; }
         static public int Score { get; private set; }
-        static private int CountLine
-        {
-            get { return CountLine; }
-            set
-            {
-                if (CountLine == 10)
-                {
-                    CountLine = 0;
-                    Speed++;
-                }
-                else CountLine += value;
-            }
-        }
+        static private int сountLines = 0;
 
         /// <summary>
         /// TODO
@@ -78,15 +66,15 @@ namespace Tetris
             {
                 case (Direction.Down):
                     {
-                        return fallingBrick.Position.Y + 1 < Commited.GetLength(0) && CheckCommited(0, 1);
+                        return CheckDownCommited();
                     }
                 case (Direction.Left):
                     {
-                        return fallingBrick.Position.X > 0 && CheckCommited(-1, 0);
+                        return CheckLeftCommited();
                     }
                 case (Direction.Right):
                     {
-                        return fallingBrick.Position.X + 1 < Commited.Length && CheckCommited(1, 0);
+                        return CheckRightCommited();
                     }
                 case (Direction.Up):
                     {
@@ -104,25 +92,56 @@ namespace Tetris
                 new System.Drawing.Point(WIDTH / 2 - Field.fallingBrick.Figure.GetLength(1) / 2, 0);
         }
 
-        private static bool CheckCommited(int _x, int _y)
+        private static bool CheckDownCommited()
         {
             int maxY = GetDownFigureEmpty();
-            int minX = GetLeftFigureEmpty();
-            int maxX = GetRightFigureEmpty();
-            for (int y = 0; y < maxY && fallingBrick.Position.Y + maxY + _y < Commited.GetLength(0); y++)
+            for (int y = 0; y < maxY && fallingBrick.Position.Y + maxY + 1 <= Commited.GetLength(0); y++)
             {
-                for (int x = minX; x < maxX; x++)
+                for (int x = 0; x < fallingBrick.Figure.GetLength(1); x++)
                 {
-                    if (fallingBrick.Figure[y, x] && Commited[fallingBrick.Position.Y + y + _y, fallingBrick.Position.X + (x - minX) + _x])
+                    if (fallingBrick.Figure[y, x] && Commited[fallingBrick.Position.Y + y + 1, fallingBrick.Position.X + x])
                     {
                         return false;
                     }
                 }
             }
-            return fallingBrick.Position.Y + maxY < Commited.GetLength(0);
+            return fallingBrick.Position.Y + maxY + 1 <= Commited.GetLength(0);
         }
 
-        //TODO
+        private static bool CheckRightCommited()
+        {
+            int maxY = GetDownFigureEmpty();
+            int maxX = GetRightFigureEmpty();
+            for (int y = 0; y < maxY && fallingBrick.Position.Y + maxY <= Commited.GetLength(0); y++)
+            {
+                for (int x = 0; x < maxX && fallingBrick.Position.X + maxX + 1 <= Commited.GetLength(1); x++)
+                {
+                    if (fallingBrick.Figure[y, x] && Commited[fallingBrick.Position.Y + y, fallingBrick.Position.X + x + 1])
+                    {
+                        return false;
+                    }
+                }
+            }
+            return fallingBrick.Position.X + maxX + 1 <= Commited.GetLength(1);
+        }
+
+        private static bool CheckLeftCommited()
+        {
+            int maxY = GetDownFigureEmpty();
+            int minX = GetLeftFigureEmpty();
+            for (int y = 0; y < maxY && fallingBrick.Position.Y + maxY <= Commited.GetLength(0); y++)
+            {
+                for (int x = minX; x < fallingBrick.Figure.GetLength(1) && fallingBrick.Position.X + minX - 1 >= 0; x++)
+                {
+                    if (fallingBrick.Figure[y, x] && Commited[fallingBrick.Position.Y + y, fallingBrick.Position.X + x - 1])
+                    {
+                        return false;
+                    }
+                }
+            }
+            return fallingBrick.Position.X + minX - 1 >= 0;
+        }
+
         private static void SetCommited()
         {
             int maxY = GetDownFigureEmpty();
@@ -134,7 +153,7 @@ namespace Tetris
                 {
                     if (fallingBrick.Figure[y, x])
                     {
-                        Commited[fallingBrick.Position.Y + y, fallingBrick.Position.X + x - minX] = true;
+                        Commited[fallingBrick.Position.Y + y, fallingBrick.Position.X + x] = true;
                     }
                 }
             }
@@ -160,7 +179,6 @@ namespace Tetris
             return fallingBrick.Figure.GetLength(0) - 1;
         }
 
-        //TODO
         private static int GetRightFigureEmpty()
         {
             bool flag = true;
@@ -181,7 +199,6 @@ namespace Tetris
             return fallingBrick.Figure.GetLength(1) - 1;
         }
 
-        //TODO
         private static int GetLeftFigureEmpty()
         {
             bool flag = true;
@@ -244,10 +261,10 @@ namespace Tetris
         private static void SetScore(int score)
         {
             Score += score;
+            if (сountLines == 10)
+                Speed++;
             if (score == SCORE_LINE)
-            {
-                CountLine += 1;
-            }
+                сountLines = сountLines == 10 ? 0 : сountLines + 1;
         }
 
         private static void CheckLine()
@@ -266,30 +283,35 @@ namespace Tetris
                 {
                     SetFallingLine(y);
                     SetScore(SCORE_LINE);
-                    y = -1;
+                    y = Commited.GetLength(0);
                 }
+                flag = true;
             }
         }
 
         private static void SetFallingLine(int y)
         {
-            for (int _y = y - 1; _y >= 0; _y--)
+            for (int x = 0; x < Commited.GetLength(1); x++)
+            {
+                Commited[y, x] = false;
+            }
+            for (int _y = y - 1; _y > 0; _y--)
             {
                 for (int x = 0; x < Commited.GetLength(1); x++)
                 {
-                    DownBrick(x, y);
+                    FallBlock(_y, x);
                 }
             }
         }
 
-        private static void DownBrick(int x, int y)
+        private static void FallBlock(int y, int x)
         {
-            for (int i = y; i < Commited.GetLength(0); i++)
+            for (int i = y; i < Commited.GetLength(0) - 1; i++)
             {
-                if (!Commited[i, x])
+                if (Commited[i, x] && !Commited[i + 1, x])
                 {
-                    Commited[i, x] = true;
-                    Commited[i - 1, x] = false;
+                    Commited[i, x] = false;
+                    Commited[i + 1, x] = true;
                 }
             }
         }
