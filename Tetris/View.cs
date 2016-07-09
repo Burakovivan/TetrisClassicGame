@@ -33,11 +33,9 @@ namespace Tetris
                 for (int j = 0; j < Field.fallingBrick.Figure.GetLength(1); j++)
                 {
                     if (Field.fallingBrick.Figure[i, j])
-                    drawBrick(j + Field.fallingBrick.Position.X, i + Field.fallingBrick.Position.Y, true);
+                        drawBrick(j + Field.fallingBrick.Position.X, i + Field.fallingBrick.Position.Y, true);
                 }
             }
-
-
             Canvas.Flush();
         }
 
