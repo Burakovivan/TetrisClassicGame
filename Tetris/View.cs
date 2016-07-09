@@ -33,7 +33,7 @@ namespace Tetris
                 for (int j = 0; j < Field.fallingBrick.Figure.GetLength(1); j++)
                 {
                     if (Field.fallingBrick.Figure[i, j])
-                    drawBrick(i + Field.fallingBrick.Position.X, j + Field.fallingBrick.Position.Y, true);
+                        drawBrick(j + Field.fallingBrick.Position.X, i + Field.fallingBrick.Position.Y, true);
                 }
             }
 
@@ -107,14 +107,14 @@ namespace Tetris
             Canvas.End();
         }
 
-        private static void drawBrick(double x, double y, bool Commited)
+        private static void drawBrick(double coll, double row, bool Commited)
         {
-            x *= 1.5;
-            y *= 1.5;
-            x -= 14.5;
-            y -= 15;
-            fillRect(x + 0.2, y + 0.2, 0.6, 0.6, Commited ? Color.Black : Color._8E9F97);
-            drawRect(x, y, 1, 1, Commited ? Color.Black : Color._8E9F97);
+            coll *= 1.5;
+            row *= 1.5;
+            coll -= 14.5;
+            row -= 15;
+            fillRect(coll + 0.2, row + 0.2, 0.6, 0.6, Commited ? Color.Black : Color._8E9F97);
+            drawRect(coll, row, 1, 1, Commited ? Color.Black : Color._8E9F97);
         }
     }
 
