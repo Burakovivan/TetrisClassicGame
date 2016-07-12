@@ -270,6 +270,7 @@ namespace Tetris
         private static void CheckLine()
         {
             bool flag = true;
+            int fallingLine = -1;
             for (int y = Commited.GetLength(0) - 1; y >= 0; y--)
             {
                 for (int x = 0; x < Commited.GetLength(1); x++)
@@ -281,20 +282,29 @@ namespace Tetris
                 }
                 if (flag)
                 {
-                    SetFallingLine(y);
+                    fallingLine = fallingLine == -1 ? y : -1;
+                    DeleteLine(y);
                     SetScore(SCORE_LINE);
-                    y = Commited.GetLength(0);
                 }
                 flag = true;
             }
+            if (fallingLine != -1)
+            {
+                SetFallingLine(fallingLine);
+                CheckLine();
+            }
         }
 
-        private static void SetFallingLine(int y)
+        private static void DeleteLine(int y)
         {
             for (int x = 0; x < Commited.GetLength(1); x++)
             {
                 Commited[y, x] = false;
             }
+        }
+
+        private static void SetFallingLine(int y)
+        {
             for (int _y = y - 1; _y > 0; _y--)
             {
                 for (int x = 0; x < Commited.GetLength(1); x++)
