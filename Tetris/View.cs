@@ -107,11 +107,11 @@ namespace Tetris
 
         private static void drawBrick(double coll, double row, bool Commited)
         {
-            coll *= 1.5;
-            row *= 1.5;
+            coll *= 1.3;
+            row *= 1.3;
             coll -= 14.5;
             row -= 15;
-            fillRect(coll + 0.2, row + 0.2, 0.6, 0.6, Commited ? Color.Black : Color._8E9F97);
+            fillRect(coll + 0.15, row + 0.15, 0.7, 0.7, Commited ? Color.Black : Color._8E9F97);
             drawRect(coll, row, 1, 1, Commited ? Color.Black : Color._8E9F97);
         }
     }

@@ -34,3 +34,21 @@ D:\C#\TetrisClassicGame\Tetris\obj\x86\Debug\Tetris.csprojResolveAssemblyReferen
 D:\C#\TetrisClassicGame\Tetris\obj\x86\Debug\Tetris.Properties.Resources.resources
 D:\C#\TetrisClassicGame\Tetris\obj\x86\Debug\Tetris.SharpGLForm.resources
 D:\C#\TetrisClassicGame\Tetris\obj\x86\Debug\Tetris.csproj.GenerateResource.Cache
+D:\dev\.NET pf\TetrisClassicGame\TetrisClassicGame\Tetris\bin\Debug\Tetris.exe.config
+D:\dev\.NET pf\TetrisClassicGame\TetrisClassicGame\Tetris\obj\x86\Debug\Tetris.exe
+D:\dev\.NET pf\TetrisClassicGame\TetrisClassicGame\Tetris\obj\x86\Debug\Tetris.pdb
+D:\dev\.NET pf\TetrisClassicGame\TetrisClassicGame\Tetris\bin\Debug\Tetris.exe
+D:\dev\.NET pf\TetrisClassicGame\TetrisClassicGame\Tetris\bin\Debug\Tetris.pdb
+D:\dev\.NET pf\TetrisClassicGame\TetrisClassicGame\Tetris\bin\Debug\SharpGL.dll
+D:\dev\.NET pf\TetrisClassicGame\TetrisClassicGame\Tetris\bin\Debug\SharpGL.SceneGraph.dll
+D:\dev\.NET pf\TetrisClassicGame\TetrisClassicGame\Tetris\bin\Debug\SharpGL.WinForms.dll
+D:\dev\.NET pf\TetrisClassicGame\TetrisClassicGame\Tetris\bin\Debug\SharpGL.pdb
+D:\dev\.NET pf\TetrisClassicGame\TetrisClassicGame\Tetris\bin\Debug\SharpGL.xml
+D:\dev\.NET pf\TetrisClassicGame\TetrisClassicGame\Tetris\bin\Debug\SharpGL.SceneGraph.pdb
+D:\dev\.NET pf\TetrisClassicGame\TetrisClassicGame\Tetris\bin\Debug\SharpGL.SceneGraph.xml
+D:\dev\.NET pf\TetrisClassicGame\TetrisClassicGame\Tetris\bin\Debug\SharpGL.WinForms.pdb
+D:\dev\.NET pf\TetrisClassicGame\TetrisClassicGame\Tetris\bin\Debug\SharpGL.WinForms.xml
+D:\dev\.NET pf\TetrisClassicGame\TetrisClassicGame\Tetris\obj\x86\Debug\Tetris.csprojResolveAssemblyReference.cache
+D:\dev\.NET pf\TetrisClassicGame\TetrisClassicGame\Tetris\obj\x86\Debug\Tetris.Properties.Resources.resources
+D:\dev\.NET pf\TetrisClassicGame\TetrisClassicGame\Tetris\obj\x86\Debug\Tetris.SharpGLForm.resources
+D:\dev\.NET pf\TetrisClassicGame\TetrisClassicGame\Tetris\obj\x86\Debug\Tetris.csproj.GenerateResource.Cache

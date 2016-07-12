@@ -31,7 +31,10 @@ namespace Tetris
         }
 
         static public Brick fallingBrick;
-        static public int Speed { get; private set; }
+        static public void IncreaseSpeed()
+        {
+            Player.SpeedValue = Player.SpeedValue.Subtract(new TimeSpan((long)1E+5));
+        }
         static public int Score { get; private set; }
         static private int сountLines = 0;
 
@@ -44,8 +47,9 @@ namespace Tetris
             if (!IsDirection(Direction.Down))
             {
                 SetCommited();
-                Thread threadCheckLine = new Thread(CheckLine);
-                threadCheckLine.Start();
+                //Thread threadCheckLine = new Thread(CheckLine);
+                //threadCheckLine.Start();
+                CheckLine();
                 SetScore(SCORE_BRICK);
                 getNextBrick();
             }
@@ -157,6 +161,9 @@ namespace Tetris
                     }
                 }
             }
+
+            //int n = fallingBrick.Figure.GetLength(0);
+            //fallingBrick.Figure = new bool[n, n];
         }
 
         private static int GetDownFigureEmpty()
@@ -247,6 +254,11 @@ namespace Tetris
                         SetDirection(Direction.Right);
                         break;
                     }
+                case (Keys.S):
+                    {
+                        IncreaseSpeed();
+                        break;
+                    }
             }
         }
 
@@ -262,7 +274,7 @@ namespace Tetris
         {
             Score += score;
             if (сountLines == 10)
-                Speed++;
+                IncreaseSpeed();
             if (score == SCORE_LINE)
                 сountLines = сountLines == 10 ? 0 : сountLines + 1;
         }
@@ -294,6 +306,8 @@ namespace Tetris
             for (int x = 0; x < Commited.GetLength(1); x++)
             {
                 Commited[y, x] = false;
+                Thread.Sleep(100);
+                View.Render();
             }
             for (int _y = y - 1; _y > 0; _y--)
             {
