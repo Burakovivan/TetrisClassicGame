@@ -31,7 +31,10 @@ namespace Tetris
         }
 
         static public Brick fallingBrick;
-        static public int Speed { get; private set; }
+        static public void IncreaseSpeed()
+        {
+            Player.SpeedValue = Player.SpeedValue.Subtract(new TimeSpan((long)1E+5));
+        }
         static public int Score { get; private set; }
         static private int сountLines = 0;
 
@@ -44,8 +47,9 @@ namespace Tetris
             if (!IsDirection(Direction.Down))
             {
                 SetCommited();
-                Thread threadCheckLine = new Thread(CheckLine);
-                threadCheckLine.Start();
+                //Thread threadCheckLine = new Thread(CheckLine);
+                //threadCheckLine.Start();
+                CheckLine();
                 SetScore(SCORE_BRICK);
                 getNextBrick();
             }
@@ -75,10 +79,6 @@ namespace Tetris
                 case (Direction.Right):
                     {
                         return CheckRightCommited();
-                    }
-                case (Direction.Up):
-                    {
-                        return true;
                     }
                 default: return false;
             }
@@ -157,6 +157,24 @@ namespace Tetris
                     }
                 }
             }
+
+            //int n = fallingBrick.Figure.GetLength(0);
+            //fallingBrick.Figure = new bool[n, n];
+        }
+
+        private static void SetRotate()
+        {
+            bool[,] copyFigure = fallingBrick.Figure;
+            fallingBrick.Rotate(Direction.Right);
+            int minX = GetLeftFigureEmpty();
+            int maxX = GetRightFigureEmpty();
+            int maxY = GetDownFigureEmpty();
+            if (fallingBrick.Position.Y + maxY > Commited.GetLength(0) ||
+                fallingBrick.Position.X + maxX > Commited.GetLength(1) ||
+                fallingBrick.Position.X + minX < 0)
+            {
+                fallingBrick.Figure = copyFigure;
+            }
         }
 
         private static int GetDownFigureEmpty()
@@ -229,7 +247,7 @@ namespace Tetris
             {
                 case (Keys.Up):
                     {
-                        fallingBrick.Rotate(Direction.Right);
+                        SetRotate();
                         break;
                     }
                 case (Keys.Down):
@@ -247,6 +265,11 @@ namespace Tetris
                         SetDirection(Direction.Right);
                         break;
                     }
+                case (Keys.S):
+                    {
+                        IncreaseSpeed();
+                        break;
+                    }
             }
         }
 
@@ -262,7 +285,7 @@ namespace Tetris
         {
             Score += score;
             if (сountLines == 10)
-                Speed++;
+                IncreaseSpeed();
             if (score == SCORE_LINE)
                 сountLines = сountLines == 10 ? 0 : сountLines + 1;
         }
@@ -282,7 +305,10 @@ namespace Tetris
                 }
                 if (flag)
                 {
-                    fallingLine = fallingLine == -1 ? y : -1;
+                    if (fallingLine == -1)
+                    {
+                        fallingLine = y;
+                    }
                     DeleteLine(y);
                     SetScore(SCORE_LINE);
                 }
@@ -300,6 +326,8 @@ namespace Tetris
             for (int x = 0; x < Commited.GetLength(1); x++)
             {
                 Commited[y, x] = false;
+                Thread.Sleep(100);
+                View.Render();
             }
         }
 

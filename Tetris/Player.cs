@@ -9,15 +9,16 @@ namespace Tetris
 {
     public static class Player
     {
-        static bool IsPause { get; set; }
-        static bool IsGame{ get; set; }
+        static bool isPause { get; set; }
+        static bool isGame{ get; set; }
+        public static TimeSpan SpeedValue;
 
         public static void CatchKey(KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
                 case Keys.P:
-                    IsPause = !IsPause;
+                    isPause = !isPause;
                     break;
                 default:
                     Field.CatchKeyDirection(e);
@@ -26,23 +27,24 @@ namespace Tetris
         }
         public static void Start()
         {
-            IsPause =   false;
-            IsGame =    true;
+            isPause =   false;
+            isGame =    true;
             Field.Init();
             View.Render();
-            while (IsGame)
+            SpeedValue = new TimeSpan((long)1E+7);
+            while (isGame)
             {
-                while (IsPause) { }
-                View.Render();
+                while (isPause) { }
+                //View.Render();
                 Field.FallingBrick();
-                View.Render();
-                Thread.Sleep(1000);
+                //View.Render();
+                Thread.Sleep(SpeedValue);
             }
         }
 
         public static void Terminate()
         {
-            IsGame = false;
+            isGame = false;
         }
 
         

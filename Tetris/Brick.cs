@@ -20,20 +20,36 @@ namespace Tetris
             switch (rotation)
             {
                 case Direction.Right:
-                    // transpose
-                    transpose(Figure);
-
-                    // swap columns
-                    for (int j = 0; j < Figure.GetLength(0) / 2; j++)
                     {
-                        for (int i = 0; i < Figure.GetLength(0); i++)
+                        bool[,] temp = new bool[n, n];
+                        //for (int i = 0; i < n; ++i)
+                        //{
+                        //    for (int j = 0; j < n; ++j)
+                        //    {
+                        //        temp[i, j] = Figure[j, i];
+                        //    }
+                        //}
+
+                        //Figure = temp;
+                        //for (int i = 0; i < n; ++i)
+                        //{
+                        //    for (int j = 0; j < n; ++j)
+                        //    {
+                        //        temp[i, j] = Figure[n - i - 1, j];
+                        //    }
+                        //}
+
+                        for (int i = 0; i < n; ++i)
                         {
-                            bool x = Figure[i,j];
-                            Figure[i, j] = Figure[Figure.GetLength(0) - 1 - i, j];
-                            Figure[Figure.GetLength(0) - 1 - i, j] = x;
+                            for (int j = 0; j < n; ++j)
+                            {
+                                temp[i, j] = Figure[j, n - i - 1];
+                            }
                         }
+
+                        Figure = temp;
+                        break;
                     }
-                    break;
                 case Direction.Left:
                     for (int i = 0; i < n; ++i)
                     {
@@ -52,9 +68,9 @@ namespace Tetris
             {
                 for (int j = i; j < m.GetLength(0); j++)
                 {
-                    bool x = m[i,j];
-                    m[i,j] = m[j,i];
-                    m[j,i] = x;
+                    bool x = m[i, j];
+                    m[i, j] = m[j, i];
+                    m[j, i] = x;
                 }
             }
         }
