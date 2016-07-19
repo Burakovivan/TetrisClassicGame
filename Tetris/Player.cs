@@ -13,6 +13,7 @@ namespace Tetris
         static bool isGame{ get; set; }
         public static TimeSpan SpeedValue;
 
+
         public static void CatchKey(KeyEventArgs e)
         {
             switch (e.KeyCode)

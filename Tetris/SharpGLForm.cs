@@ -16,12 +16,13 @@ namespace Tetris
     /// </summary>
     public partial class SharpGLForm : Form
     {
+        double[] lookPoint = new double[] { 13.6, 12.8, -50 };
         /// <summary>
         /// Initializes a new instance of the <see cref="SharpGLForm"/> class.
         /// </summary>
         public SharpGLForm()
         {
-            InitializeComponent();
+            InitializeComponent(); 
         }
 
         /// <summary>
@@ -74,7 +75,7 @@ namespace Tetris
             gl.Perspective(30.0f, (double)Width / (double)Height, 0.01, 100.0);
 
             //  Use the 'look at' helper function to position and aim the camera.
-            gl.LookAt(-1.3, -2,-85, -1.3, -2, 0, 0, -1, 0);
+            gl.LookAt(lookPoint[0], lookPoint[1], lookPoint[2], lookPoint[0], lookPoint[1], 0, 0, -1, 0);
 
             //  Set the modelview matrix.
             gl.MatrixMode(OpenGL.GL_MODELVIEW);
@@ -97,8 +98,22 @@ namespace Tetris
         {
             Thread myt = new Thread(Player.Start);
             myt.Start();
+            Field.SpeedIncreased = IncSpeed;
+            Field.ScooreIncreased = IncScoore;
         }
+        private void IncSpeed()
+        {
+            Speed.Text = "Speed\n" + Math.Round(100 - Player.SpeedValue.TotalSeconds * 100);
+        }
+        private void IncScoore()
+        {
+            new Thread(new ThreadStart(iS)).Start();
+        }
+        private void iS()
+        {
+            Scoore.Text = "Scoore\n" + Field.Scoore;
 
+        }
         private void SharpGLForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             Player.Terminate();

@@ -14,6 +14,8 @@ namespace Tetris
         private const int SCORE_BRICK = 4;
         private const int WIDTH = 15;
         private const int HEIGHT = 20;
+        public static Action SpeedIncreased;
+        public static Action ScooreIncreased;
         /// <summary>
         /// Bricks that was fallen down
         /// </summary>
@@ -34,8 +36,21 @@ namespace Tetris
         static public void IncreaseSpeed()
         {
             Player.SpeedValue = Player.SpeedValue.Subtract(new TimeSpan((long)1E+5));
+            SpeedIncreased.Invoke();
         }
-        static public int Score { get; private set; }
+        private static int scoore = 0;
+        static public int Scoore
+        {
+            get { return scoore; }
+            private set
+            {
+
+                scoore = value;
+                Thread tmp = new Thread(new ThreadStart(ScooreIncreased));
+                tmp.Start();
+                //ScooreField.Text = "Scoore\n" + scoore;
+            }
+        }
         static private int сountLines = 0;
 
         /// <summary>
@@ -90,6 +105,7 @@ namespace Tetris
             Field.fallingBrick = Bricks.AllBricks[r.Next(0, Bricks.AllBricks.Length - 1)];
             Field.fallingBrick.Position =
                 new System.Drawing.Point(WIDTH / 2 - Field.fallingBrick.Figure.GetLength(1) / 2, 0);
+            View.IsDrawFallingBrick = true;
         }
 
         private static bool CheckDownCommited()
@@ -157,6 +173,7 @@ namespace Tetris
                     }
                 }
             }
+            View.IsDrawFallingBrick = false;
 
             //int n = fallingBrick.Figure.GetLength(0);
             //fallingBrick.Figure = new bool[n, n];
@@ -283,7 +300,7 @@ namespace Tetris
 
         private static void SetScore(int score)
         {
-            Score += score;
+            Scoore += score;
             if (сountLines == 10)
                 IncreaseSpeed();
             if (score == SCORE_LINE)
@@ -326,7 +343,7 @@ namespace Tetris
             for (int x = 0; x < Commited.GetLength(1); x++)
             {
                 Commited[y, x] = false;
-                Thread.Sleep(100);
+                Thread.Sleep(50);
                 View.Render();
             }
         }
